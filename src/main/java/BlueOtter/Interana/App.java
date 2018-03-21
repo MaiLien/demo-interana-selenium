@@ -3,10 +3,10 @@ package BlueOtter.Interana;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.support.FindBy;
 
 /**
  * Hello world!
@@ -30,20 +30,38 @@ public class App {
 
 		driver.findElement(By.xpath("//a[@href='#/explorer/']")).click();
 
-		//Dong 2 phan tren
-		driver.findElement(By.xpath(".//div[contains(@class,'explorerWidget')]//div[contains(@class,'controlHeading')]")).click();
-		driver.findElement(By.xpath("//div[contains(@class,'timeWidget')]//div[contains(@class,'controlHeading')]")).click();
-		
-		//Chon First
-		driver.findElement(By.xpath("//div[contains(@class,'metricsWidget')]//div[contains(@class,'chzn-container')]")).click();
-		driver.findElement(By.xpath(".//div[@class='chzn-drop']//ul//li[text()='First']")).click();
+		// Dong 2 phan tren
+		driver.findElement(
+				By.xpath(".//div[contains(@class,'explorerWidget')]//div[contains(@class,'controlHeading')]")).click();
+		driver.findElement(By.xpath("//div[contains(@class,'timeWidget')]//div[contains(@class,'controlHeading')]"))
+				.click();
 
-		//Chon user
-		driver.findElement(By.xpath("//div[contains(@class,'metricsWidget')]//div[@class='input-search-container']")).click();
-		driver.findElement(By.xpath("//div[contains(@class,'metricsWidget')]//div[@class='search-result']//ol//li//span[text()='user']")).click();
+		// Chon First
+		driver.findElement(By.xpath("//div[contains(@class,'metricsWidget')]//div[contains(@class,'chzn-container')]"))
+				.click();
+
+		WebElement first = driver.findElement(By.xpath(".//div[@class='chzn-drop']//ul//li[text()='First']"));
+		System.out.println("first.isDisplayed(): " + first.isDisplayed());
+		
+		scrollDropdownToViewElement(first, driver);
+		
+		first.click();
+
+		// Chon user
+		driver.findElement(By.xpath("//div[contains(@class,'metricsWidget')]//div[@class='input-search-container']"))
+				.click();
+		driver.findElement(By.xpath(
+				"//div[contains(@class,'metricsWidget')]//div[@class='search-result']//ol//li//span[text()='user']"))
+				.click();
 
 		// Thread.sleep(5);
 		// driver.close();
 
 	}
+
+	static void scrollDropdownToViewElement(WebElement element, WebDriver driver) {
+		JavascriptExecutor je = (JavascriptExecutor) driver;
+		je.executeScript("arguments[0].scrollIntoView(true);", element);
+	}
+
 }

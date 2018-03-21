@@ -1,6 +1,7 @@
 package BlueOtter.Interana.PageObject;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -13,7 +14,7 @@ public class ExploreFrame {
 	@FindBy(xpath = "//a[@href='#/explorer/']")
 	private WebElement exploreBtn;
 
-	
+	@FindBy(xpath="//div[contains(@class,'goBtn')]")
 	private WebElement goBtn;
 
 	@FindBy(xpath = ".//div[contains(@class,'explorerWidget')]//div[contains(@class,'controlHeading')]")
@@ -81,16 +82,22 @@ public class ExploreFrame {
 	public void selectMeasureByVisibleText(String measure) {
 		measureFrame_measureSelect.click();
 		String optionXpath = String.format(measureFrame_measureOptionXpath, measure);
-//		WebElement option = driver.findElement(By.xpath(optionXpath));
-//		option.click();
-		driver.findElement(By.xpath(optionXpath)).click();
+		WebElement option = driver.findElement(By.xpath(optionXpath));
+		scrollDropdownToViewElement(option);
+		option.click();
 	}
 	
 	public void selectFirstBoxByVisibleText(String measure) {
 		measureFrame_firstBoxSelect.click();
 		String optionXpath = String.format(measureFrame_firstBoxOptionXpath, measure);
 		WebElement option = driver.findElement(By.xpath(optionXpath));
+		scrollDropdownToViewElement(option);
 		option.click();
+	}
+	
+	public void scrollDropdownToViewElement(WebElement element) {
+		JavascriptExecutor je = (JavascriptExecutor) driver;
+		je.executeScript("arguments[0].scrollIntoView(true);", element);
 	}
 
 }

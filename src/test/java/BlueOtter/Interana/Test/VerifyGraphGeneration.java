@@ -4,11 +4,15 @@ import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
+import com.google.common.graph.Graph;
+
 import BlueOtter.Interana.PageObject.ExploreFrame;
+import BlueOtter.Interana.PageObject.GraphPage;
 import BlueOtter.Interana.PageObject.LoginPage;
 
 public class VerifyGraphGeneration {
@@ -23,12 +27,17 @@ public class VerifyGraphGeneration {
 	String measureAtSelect = "First";
 	String measureAtFirstBox = "user";
 	String startTime = "5 days ago";
+	
+	String chartTitle = "WIKIPEDIA - FIRST (USER)";
+	String chartSummary = "Measuring first of user from 5 days ago to now (PDT)";
+	String datasetHeader = "wikipedia";
+	String measureHeader = "First user";
 
 	@BeforeTest
 	public void before() {
 		System.setProperty("webdriver.gecko.driver", ".\\gecko\\v0.19.0\\geckodriver.exe");
 		driver = new FirefoxDriver();
-		driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 
 		driver.get(url);
 		LoginPage loginPage = new LoginPage(driver);
@@ -58,8 +67,6 @@ public class VerifyGraphGeneration {
 		// Select "First" in the Measure frame
 		exploreFrame.selectMeasureByVisibleText(measureAtSelect);
 		
-		System.out.println("OK");
-
 		// Select "user" for measure column in the new box appears
 		exploreFrame.selectFirstBoxByVisibleText(measureAtFirstBox);
 
@@ -67,13 +74,17 @@ public class VerifyGraphGeneration {
 		exploreFrame.clickGoButton();
 
 		// Verify that graph is generated
+		GraphPage graphPage = new GraphPage(driver);
+		Assert.assertEquals(chartTitle, graphPage.getChartTitle().toUpperCase());
+		Assert.assertEquals(chartSummary, graphPage.getChartSummary());
+		Assert.assertEquals(datasetHeader, graphPage.getDatasetHeader());
+		Assert.assertEquals(measureHeader, graphPage.getMeasureHeader());
 		
-
 	}
 
 	@AfterTest
 	public void after() {
-//		 driver.quit();
+		 driver.quit();
 	}
 
 }
