@@ -9,9 +9,7 @@ import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-import com.google.common.graph.Graph;
-
-import BlueOtter.Interana.PageObject.ExploreFrame;
+import BlueOtter.Interana.PageObject.ExplorePage;
 import BlueOtter.Interana.PageObject.GraphPage;
 import BlueOtter.Interana.PageObject.LoginPage;
 
@@ -22,16 +20,6 @@ public class VerifyGraphGeneration {
 	String url = "https://demo.interana.com/";
 	String email = "mailien.bk@gmail.com";
 	String password = "Demo2018";
-
-	String view = "Table";
-	String measureAtSelect = "First";
-	String measureAtFirstBox = "user";
-	String startTime = "5 days ago";
-	
-	String chartTitle = "WIKIPEDIA - FIRST (USER)";
-	String chartSummary = "Measuring first of user from 5 days ago to now (PDT)";
-	String datasetHeader = "wikipedia";
-	String measureHeader = "First user";
 
 	@BeforeTest
 	public void before() {
@@ -46,32 +34,43 @@ public class VerifyGraphGeneration {
 
 	@Test
 	public void test() {
-		ExploreFrame exploreFrame = new ExploreFrame(driver);
+		
+		String view = "Table";
+		String measureAtSelect = "First";
+		String measureAtFirstBox = "user";
+		String startTime = "5 days ago";
+		
+		String chartTitle = "WIKIPEDIA - FIRST (USER)";
+		String chartSummary = "Measuring first of user from 5 days ago to now (PDT)";
+		String datasetHeader = "wikipedia";
+		String measureHeader = "First user";
+		
+		ExplorePage explorePage = new ExplorePage(driver);
 
 		// Click Explore button in the left side
-		exploreFrame.open();
+		explorePage.open();
 
 		// Select Table view in Explore frame
-		exploreFrame.selectViewByVisibleText(view);
+		explorePage.selectViewAtExploreFrame(view);
 
 		// Click "Down arrow" in the upper right of the Explore frame to minimize it
-		exploreFrame.minimizeExplore();
+		explorePage.minimizeExploreFrame();
 
 		// Input "5 days ago" to the Start text box in the Time frame
-		exploreFrame.cleanStartTime();
-		exploreFrame.setStartTime(startTime);
+		explorePage.setStartTimeAtTimeFrame(startTime);
 
 		// Click "Down arrow" in the upper right of the Time frame to minimize it
-		exploreFrame.minimizeTime();
+		explorePage.minimizeTimeFrame();
 
+		//TODO
 		// Select "First" in the Measure frame
-		exploreFrame.selectMeasureByVisibleText(measureAtSelect);
+		explorePage.selectMeasureAtMeasureFrame(measureAtSelect);
 		
 		// Select "user" for measure column in the new box appears
-		exploreFrame.selectFirstBoxByVisibleText(measureAtFirstBox);
+		explorePage.selectFirstBoxAtMeasureFrame(measureAtFirstBox);
 
 		// Click "GO" button
-		exploreFrame.clickGoButton();
+		explorePage.clickGoButton();
 
 		// Verify that graph is generated
 		GraphPage graphPage = new GraphPage(driver);
