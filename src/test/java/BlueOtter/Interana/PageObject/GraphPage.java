@@ -9,16 +9,16 @@ public class GraphPage {
 	
 	private WebDriver driver;
 
-	@FindBy(xpath = "//div[@class='chartCanvasTitleText']")
+	@FindBy(xpath = "//div[contains(@class,'exploreCanvas')][1]//div[@class='chartCanvasTitleText']")
 	private WebElement chartTitle;
 
-	@FindBy(xpath = "//div[@class='chartCanvasTitleSummary']")
+	@FindBy(xpath = "//div[contains(@class,'exploreCanvas')][1]//div[@class='chartCanvasTitleSummary']")
 	private WebElement chartSummary;
 	
-	@FindBy(xpath="//div[@class='interanaChartCanvas chartCanvas_table']//div[@class='header-cell '][1]//div[@class='header-value-wrapper']")
+	@FindBy(xpath="//div[contains(@class,'exploreCanvas')][1]//div[@class='interanaChartCanvas chartCanvas_table']//div[@class='header-cell '][1]//div[@class='header-value-wrapper']")
 	private WebElement datasetHeader;
 	
-	@FindBy(xpath="//div[@class='interanaChartCanvas chartCanvas_table']//div[@class='header-cell '][2]//div[@class='header-value-wrapper']")
+	@FindBy(xpath="//div[contains(@class,'exploreCanvas')][1]//div[@class='interanaChartCanvas chartCanvas_table']//div[@class='header-cell '][2]//div[@class='header-value-wrapper']")
 	private WebElement measureHeader;
 	
 	public GraphPage(WebDriver _driver) {
