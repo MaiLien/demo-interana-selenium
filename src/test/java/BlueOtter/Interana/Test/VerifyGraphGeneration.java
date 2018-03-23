@@ -62,7 +62,6 @@ public class VerifyGraphGeneration {
 		// Click "Down arrow" in the upper right of the Time frame to minimize it
 		explorePage.minimizeTimeFrame();
 
-		//TODO
 		// Select "First" in the Measure frame
 		explorePage.selectMeasureAtMeasureFrame(measureAtSelect);
 		
@@ -74,10 +73,10 @@ public class VerifyGraphGeneration {
 
 		// Verify that graph is generated
 		GraphPage graphPage = new GraphPage(driver);
-		Assert.assertEquals(chartTitle, graphPage.getChartTitle().toUpperCase());
-		Assert.assertEquals(chartSummary, graphPage.getChartSummary());
-		Assert.assertEquals(datasetHeader, graphPage.getDatasetHeader());
-		Assert.assertEquals(measureHeader, graphPage.getMeasureHeader());
+		Assert.assertEquals(graphPage.getChartTitle().toUpperCase(), chartTitle);
+		Assert.assertEquals(graphPage.getChartSummary(), chartSummary);
+		Assert.assertEquals(graphPage.getDatasetHeader(), datasetHeader);
+		Assert.assertEquals(graphPage.getMeasureHeader(), measureHeader);
 		
 	}
 
